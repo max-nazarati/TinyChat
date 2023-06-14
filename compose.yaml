@@ -2,12 +2,12 @@ version: "3.9"
 
 services:
   zookeeper:
-    image: zookeeper
+    image: zookeeper:3.8.1
     expose:
       - 2181
 
   kafka-server:
-    image: bitnami/kafka
+    image: bitnami/kafka:3.2.3
     environment:
       ALLOW_PLAINTEXT_LISTENER: yes
       KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: false
