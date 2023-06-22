@@ -1,0 +1,3 @@
+tinychat:
+  kafka:
+    main-topic: messages

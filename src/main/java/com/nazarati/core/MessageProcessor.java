@@ -1,4 +1,4 @@
-package com.nazarati.config;
+package com.nazarati.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 public class MessageProcessor {
     private static final Logger logger = LoggerFactory.getLogger(MessageProcessor.class);
 
-    @KafkaListener(id = "message-listener", topics = "messages")
+    @KafkaListener(id = "message-listener", topics = "${tinychat.kafka.main-topic}")
     public void listen(String data) {
-        logger.info("received message: [%s]".formatted(data));
+        logger.trace("begin processing of message [{}]", data);
     }
 
 }
