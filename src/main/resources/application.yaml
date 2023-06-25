@@ -1,3 +1,6 @@
 tinychat:
   kafka:
     main-topic: messages
+logging:
+  level:
+    root: warn
