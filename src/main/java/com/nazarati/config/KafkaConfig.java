@@ -16,7 +16,8 @@ import java.util.Map;
 
 @Configuration
 public class KafkaConfig {
-    @Value(value = "localhost:9092")
+
+    @Value("${tinychat.kafka.bootstrap-server}")
     private String bootstrapAddress;
 
     // TODO: when local profile is introduced also add programmatic topic creation for convenience
@@ -27,7 +28,7 @@ public class KafkaConfig {
             var props = new HashMap<String, Object>();
             props.put("client.id", InetAddress.getLocalHost().getHostName());
             props.put("group.id", "test-consumer-group");
-            props.put("bootstrap.servers", "localhost:9092");
+            props.put("bootstrap.servers", bootstrapAddress);
             props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
             props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
 

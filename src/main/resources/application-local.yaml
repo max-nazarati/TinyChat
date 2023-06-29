@@ -1,0 +1,6 @@
+tinychat:
+  kafka:
+    bootstrap-server: localhost:9092
+logging:
+  level:
+    com.nazarati: trace
