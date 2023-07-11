@@ -7,6 +7,7 @@ import com.aerospike.client.Log;
 import com.aerospike.client.Record;
 import com.aerospike.client.policy.Policy;
 import com.aerospike.client.policy.WritePolicy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ public class MessageProcessor extends LoggedClass<MessageProcessor> {
     int i = 0;
 
     @KafkaListener(id = "message-listener", topics = "${tinychat.kafka.main-topic}")
-    public void listen(String data) {
+    public void listen(Pojo data) {
         logger.trace("began processing of message [{}]", data);
         Log.setCallbackStandard();
         Log.setLevel(Log.Level.INFO);
