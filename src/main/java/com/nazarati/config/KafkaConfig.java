@@ -1,6 +1,8 @@
 package com.nazarati.config;
 
+import com.nazarati.core.Pojo;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -35,19 +37,22 @@ public class KafkaConfig {
             props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class.getName());
 
             return props;
-        }
-        catch (UnknownHostException e) {
+        } catch (UnknownHostException e) {
             throw new RuntimeException("failed to set kafka properties");
         }
 
     }
 
     @Bean
-    KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, String>> kafkaListenerContainerFactory() {
-        var factory = new ConcurrentKafkaListenerContainerFactory<Integer, String>();
-        factory.setConsumerFactory(new DefaultKafkaConsumerFactory<>(consumerConfigs()));
+    KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, Pojo>> kafkaListenerContainerFactory() {
+        var containerFactory = new ConcurrentKafkaListenerContainerFactory<Integer, Pojo>();
+        containerFactory.setConsumerFactory(new DefaultKafkaConsumerFactory<>(
+                consumerConfigs(),
+                new IntegerDeserializer(),
+                new JsonDeserializer<>(Pojo.class, false)
+        ));
 
-        return factory;
+        return containerFactory;
     }
 
 }
